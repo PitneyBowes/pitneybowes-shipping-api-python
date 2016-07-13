@@ -164,4 +164,8 @@ Developers are also encouraged to use the tutorial example and source code
 comment blocks (shipping_resource.py) for information on the wrapper layer 
 interface and mapping to the underlying REST shipping APIs. 
 
+## Support 
+
+For support issues please contact support at ShippingAPISupport@pb.com
+
 
