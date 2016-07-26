@@ -48,7 +48,7 @@ if sys.version_info < (2, 6):
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'pbshipping'))
 
 #from version import VERSION
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 setup(name='pbshipping',
       cmdclass={'build_py': build_py, "build_scripts": build_scripts},
@@ -59,7 +59,7 @@ setup(name='pbshipping',
       author='Pitney Bowes Shipping API team',
       author_email='ShippingAPISupport@pb.com',
       license='MIT',
-      packages=['pbshipping'],
+      packages=['pbshipping', 'pbshipping.test'],
       test_suite="test",
       #install_requires=install_requires,
       use_2to3=True,
