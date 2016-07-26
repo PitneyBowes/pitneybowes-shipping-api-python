@@ -48,14 +48,14 @@ if sys.version_info < (2, 6):
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'pbshipping'))
 
 #from version import VERSION
-VERSION = '1.0.2'
+VERSION = '1.0.3'
 
 setup(name='pbshipping',
       cmdclass={'build_py': build_py, "build_scripts": build_scripts},
       version=VERSION,
       description='Pitney Bowes Shipping API client library for Python',
       url='http://developer.pitneybowes.com/',
-      #download_url = "<github path>",
+      download_url = "https://github.com/PitneyBowes/pitneybowes-shipping-api-python",
       author='Pitney Bowes Shipping API team',
       author_email='ShippingAPISupport@pb.com',
       license='MIT',
