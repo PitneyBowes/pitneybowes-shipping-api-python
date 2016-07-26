@@ -361,9 +361,9 @@ def get_tracking_update():
         _tracking.updateStatus(_auth_obj)        
     except APIError, api_err:
         if Configuration.params["is_production"] == False:
-            if api_err.error_info[0]["errorCode"] == 'PB-TRKPKG-ERR-7600':
                 print "   no tracking information in sandbox environment"
                 return
+        raise api_err
 
     print "   status = " + _tracking.status
 
