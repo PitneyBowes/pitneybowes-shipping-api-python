@@ -17,7 +17,7 @@ For more informaton please visit the
 
 ## Installation
 
-You can either install from the source available from Github repository (TBD) or
+You can either install from the source available from Github repository (https://github.com/PitneyBowes/pitneybowes-shipping-api-python) or
 the [Python Package Index (PyPI)](https://pypi.python.org/pypi).
 
 ### Installing from the source:
