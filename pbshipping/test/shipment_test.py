@@ -23,13 +23,14 @@ from pbshipping import *
 class TestShipment(unittest.TestCase):
 
     def setUp(self):
+        test_util.setup_env()
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
 
         developer = Developer(developerid=test_util._test_devid)
         merchant = developer.registerMerchantIndividualAccount(self.auth_obj, 
             test_util._test_merchant_email)
-        self.acct_num = merchant.paymentAccountNumber
+        self.shipper_id = merchant.postalReportingNumber
 
     def tearDown(self):
         pass
@@ -47,7 +48,7 @@ class TestShipment(unittest.TestCase):
         shipment.rates = rates    
         shipment.documents = [Document(test_util._MY_SHIPMENT_DOCUMENT)]
         shipment.shipmentOptions = [
-            ShipmentOptions({"name": "SHIPPER_ID", "value": self.acct_num}),
+            ShipmentOptions({"name": "SHIPPER_ID", "value": self.shipper_id}),
             ShipmentOptions({"name": "ADD_TO_MANIFEST", "value": "true" })
         ]
         txid = test_util.get_pb_tx_id()

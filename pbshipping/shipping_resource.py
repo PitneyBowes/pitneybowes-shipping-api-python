@@ -186,22 +186,11 @@ class Developer(ShippingAPIResource):
     #
     # Retrieve all transactions based on the given input parameters   
     #    
-    def getTransactionReport(self, auth_obj, fromDate, toDate, txid, merchantId):
+    def getTransactionReport(self, auth_obj, params):
         if self.developerid is None:
             raise error.MissingResourceAttribute("developerid")
         api_path = "/ledger/developers/" + self.developerid 
         api_path += "/transactions/reports"
-        params = dict()
-        if fromDate != None:
-            params["fromDate"] = fromDate
-        if toDate != None:
-            params["toDate"] = toDate
-        if txid != None:
-            params["transactionId"] = txid
-        if merchantId != None:
-            params["merchantId"] = merchantId
-        if params == False:
-            params = None
         api_version = get_api_version("get/ledger/developers/.../transactions/reports")
         json_resp = super(Developer, self).request("get", auth_obj, api_version, 
             api_path, None, params, None)

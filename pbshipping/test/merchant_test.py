@@ -23,6 +23,7 @@ from pbshipping import *
 class TestMerchant(unittest.TestCase):
 
     def setUp(self):
+        test_util.setup_env()
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
 

@@ -16,6 +16,7 @@
 # Description: transaction report management related tests
 #
 
+import json
 import unittest
 import test_util
 from pbshipping import *
@@ -23,6 +24,7 @@ from pbshipping import *
 class TestTransactionReport(unittest.TestCase):
 
     def setUp(self):
+        test_util.setup_env()        
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
 
@@ -32,7 +34,7 @@ class TestTransactionReport(unittest.TestCase):
     def testTransactionReport(self):
         print "Testing get transaction report  ..."        
         Developer(developerid=test_util._test_devid).getTransactionReport(
-            self.auth_obj, None, None, None, None)
+            self.auth_obj, None)
 
 
 if __name__ == "__main__":

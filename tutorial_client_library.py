@@ -119,7 +119,7 @@ _MY_SHIPMENT_DOCUMENT = {
     
 # use the current timestamp to generate a transaction id 
 def get_pb_tx_id():
-    return str(int(time.time()))
+    return datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S%f")
 
 # obtain authentication, developer, and merchant infomratoin from 
 # command line
@@ -372,8 +372,9 @@ def get_tracking_update():
 def get_transaction_report():
     
     print "Retrieving transaction report ..."
-    report = Developer(developerid=_dev_id).getTransactionReport(_auth_obj, 
-        None, None, None, _merchant.postalReportingNumber)
+    params = dict()
+    params["merchantId"] = _merchant.postalReportingNumber
+    report = Developer(developerid=_dev_id).getTransactionReport(_auth_obj, params)
     for next_row in report.content:
         txn = TransactionDetails(next_row)
         txn_detail = "      id: " + txn.transactionId

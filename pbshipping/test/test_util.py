@@ -16,13 +16,21 @@
 # Description: supporting classes for test suite
 #
 
+import sys
+sys.path.insert(0, "../")
+sys.path.insert(0, "../../")
 import time
+import datetime
 import os
+from pbshipping import Configuration
 
-_test_api_key=None # <set here or through env variable PBSHIIPING_KEY"
-_test_api_secret=None # <set here or through env variable PBSHIPPING_SECRET"
-_test_devid=None # <set here or through env variable PBSHIPPING_DEVID"
-_test_merchant_email=None # <set here or through env variable PBSHIPPING_MERCHNAT"
+_test_api_key=None # <set here or through env variable PBSHIIPING_KEY
+_test_api_secret=None # <set here or through env variable PBSHIPPING_SECRET
+_test_devid=None # <set here or through env variable PBSHIPPING_DEVID
+_test_merchant_email=None # <set here or through env variable PBSHIPPING_MERCHANT
+_test_sandbox=None # <set here or through env variable PBSHIPPING_SANDBOX
+_test_production=None # <set here or through env variable PBSHIPPING_PRODUCTION
+_test_is_production=None # <set here or through env variable PBSHIPPING_IS_PRODUCTION
 
 _MY_BULK_MERCHANT_ADDR = {
     "addressLines" : ["27 Waterview Drive"], 
@@ -104,6 +112,7 @@ _MY_SHIPMENT_DOCUMENT = {
 
 def setup_env():
     global _test_api_key, _test_api_secret, _test_devid, _test_merchant_email
+    global _test_sandbox, _test_production, _test_is_production
     
     if _test_api_key is None:
         _test_api_key = os.environ.get("PBSHIPPING_KEY", None)
@@ -112,8 +121,26 @@ def setup_env():
     if _test_devid is None:
         _test_devid = os.environ.get("PBSHIPPING_DEVID", None)
     if _test_merchant_email is None:
-        _test_merchant_email = os.environ.get("PBSHIPPING_MERCHANT", None)  
-    
+        _test_merchant_email = os.environ.get("PBSHIPPING_MERCHANT", None)
+    if _test_sandbox is None:
+        _test_sandbox = os.environ.get("PBSHIPPING_SANDBOX", None)
+    if _test_production is None:
+        _test_production = os.environ.get("PBSHIPPING_PRODUCTION", None)
+    if _test_is_production is None:
+        str_is_production = os.environ.get("PBSHIPPING_IS_PRODUCTION", "false")
+        str_is_production = str_is_production.lower()
+        if str_is_production == "false":
+            _test_is_production = False
+        else:
+            _test_is_production = True
+
+    if _test_sandbox is not None:
+        Configuration.params["sandbox"] = _test_sandbox
+    if _test_production is not None:
+        Configuration.params["production"] = _test_production
+    if _test_is_production is not None:
+        Configuration.params["is_production"] = _test_is_production
+        
 def get_pb_tx_id():
-    return str(int(time.time()))
+    return datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S%f")
 

@@ -24,13 +24,14 @@ from pbshipping import *
 class TestManifest(unittest.TestCase):
 
     def setUp(self):
+        test_util.setup_env()        
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
         
         developer = Developer(developerid=test_util._test_devid)
         merchant = developer.registerMerchantIndividualAccount(self.auth_obj, 
             test_util._test_merchant_email)
-        acct_num = merchant.paymentAccountNumber
+        shipper_id = merchant.postalReportingNumber
                 
         rate = Rate(test_util._MY_RATE_REQUEST_CARRIER_USPS)  
         parcel = Parcel(test_util._MY_PARCEL)    
@@ -47,7 +48,7 @@ class TestManifest(unittest.TestCase):
         self.shipment1.rates = rates    
         self.shipment1.documents = [Document(test_util._MY_SHIPMENT_DOCUMENT)]
         self.shipment1.shipmentOptions = [
-            ShipmentOptions({"name": "SHIPPER_ID", "value": acct_num}),
+            ShipmentOptions({"name": "SHIPPER_ID", "value": shipper_id}),
             ShipmentOptions({"name": "ADD_TO_MANIFEST", "value": "true" })
         ]
         
@@ -56,7 +57,7 @@ class TestManifest(unittest.TestCase):
         self.shipment2.rates = rates    
         self.shipment2.documents = [Document(test_util._MY_SHIPMENT_DOCUMENT)]
         self.shipment2.shipmentOptions = [
-            ShipmentOptions({"name": "SHIPPER_ID", "value": acct_num}),
+            ShipmentOptions({"name": "SHIPPER_ID", "value": shipper_id}),
             ShipmentOptions({"name": "ADD_TO_MANIFEST", "value": "true" })
         ]
         
