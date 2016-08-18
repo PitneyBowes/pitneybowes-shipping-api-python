@@ -321,8 +321,11 @@ class Shipment(ShippingAPIResource):
     #
     # Rate a shipment before a shipment label is purchased and printed.
     #    
-    def getRates(self, auth_obj, txid, includeDeliveryCommitment=None):
+    def getRates(self, auth_obj, txid, includeDeliveryCommitment=None,
+                 extraHdrs=None):
         hdrs = {Configuration.txid_attrname: txid}
+        if extraHdrs is not None:
+            hdrs.update(extraHdrs)
         if includeDeliveryCommitment is None:
             params = {"includeDeliveryCommitment": False}            
         else:
@@ -345,8 +348,10 @@ class Shipment(ShippingAPIResource):
     # returned instead
     # 
     def createAndPurchase(self, auth_obj, txid, includeDeliveryCommitment=None,
-                          overwrite=True):
+                          extraHdrs=None, overwrite=True):
         hdrs = {Configuration.txid_attrname: txid}
+        if extraHdrs is not None:
+            hdrs.update(extraHdrs)
         if includeDeliveryCommitment is None:
             params = {"includeDeliveryCommitment": False}            
         else:
