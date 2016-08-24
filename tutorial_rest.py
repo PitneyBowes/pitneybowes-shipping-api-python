@@ -29,6 +29,7 @@ import json
 import urlparse
 import urllib
 import urllib2
+from decimal import Decimal
 
 #-------------------------------------------------------------------------------
 # Constants
@@ -90,7 +91,7 @@ _MY_RATE_REQUEST_CARRIER_USPS = {
              ]
         }
     ],
-    "inductionPostalCode":"06484"
+    "inductionPostalCode":"06810"
 }
 
 _MY_SHIPMENT_DOCUMENT = {
@@ -119,6 +120,11 @@ def encode_dict_utf8(dict_obj):
     for key, value in dict_obj.iteritems():
         key = utf8(key)
         yield (key, utf8(value))
+
+def json_serialize_default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError 
 
 def construct_api_url(url, query):
     scheme, netloc, path, base_query, fragment = urlparse.urlsplit(url)
@@ -168,7 +174,7 @@ def call_shipping_api(api_path, http_method, req_xtr_hdrs, req_params, req_data)
     if http_method is "GET" or req_data is None:
         req_data_str = ""
     else:
-        req_data_str = json.dumps(req_data) 
+        req_data_str = json.dumps(req_data, default=json_serialize_default) 
 
     print "call_shipping_api with url: " + url
     
@@ -184,7 +190,7 @@ def call_shipping_api(api_path, http_method, req_xtr_hdrs, req_params, req_data)
     result['status_code'] = status_code
     result['type'] = content_type
     if (result['type'].startswith('application/json') == True):
-        result['data'] = json.loads(content)
+        result['data'] = json.loads(content, parse_float=Decimal)
     else:    
         result['data'] = content
         
@@ -215,7 +221,7 @@ def authenticate_and_authorize(api_key, api_secret):
     resp = urllib2.urlopen(req)
 
     global _pb_oauth_params
-    oauth_obj = json.loads(resp.read())
+    oauth_obj = json.loads(resp.read(), parse_float=Decimal)
     
     _pb_oauth_params = u"Bearer " + oauth_obj["access_token"]
 

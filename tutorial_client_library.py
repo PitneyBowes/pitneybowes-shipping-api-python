@@ -105,7 +105,7 @@ _MY_RATE_REQUEST_CARRIER_USPS = {
              ]
         }
     ],
-    "inductionPostalCode":"06484"
+    "inductionPostalCode":"06810"
 }
 
 _MY_SHIPMENT_DOCUMENT = {
