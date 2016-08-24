@@ -27,36 +27,30 @@ class TestShipment(unittest.TestCase):
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
 
-        developer = Developer(developerid=test_util._test_devid)
-        merchant = developer.registerMerchantIndividualAccount(self.auth_obj, 
-            test_util._test_merchant_email)
-        self.shipper_id = merchant.postalReportingNumber
+        self.developer = test_util.setup_developer(self.auth_obj)
+        self.merchant, self.acct_num = test_util.setup_merchant(
+            self.auth_obj, self.developer)
+        self.shipper_id = self.merchant.postalReportingNumber
 
     def tearDown(self):
         pass
 
     def testShipment(self):
-        rate = Rate(test_util._MY_RATE_REQUEST_CARRIER_USPS)  
-        parcel = Parcel(test_util._MY_PARCEL)              
-        shipment = Shipment(fromAddress=test_util._MY_ORIGIN_ADDR, 
-                            toAddress=test_util._MY_DEST_ADDR,
-                            parcel=parcel, rates=[rate])
+                
+        print "Testing rate query and purchasing shipment label ..."
+        start_balance = Account.getBalanceByAccountNumber(
+            self.auth_obj, self.acct_num)      
+        test_util.check_shipment_rate(self.auth_obj, self.developer)       
+        shipment, txid = test_util.create_single_shipment(
+            self.auth_obj, self.developer, self.shipper_id)
+        end_balance = Account.getBalanceByAccountNumber(
+            self.auth_obj, self.acct_num)
         
-        print "Testing get shipment rates ..."
-        rates = shipment.getRates(self.auth_obj, test_util.get_pb_tx_id(), True)  
-    
-        shipment.rates = rates    
-        shipment.documents = [Document(test_util._MY_SHIPMENT_DOCUMENT)]
-        shipment.shipmentOptions = [
-            ShipmentOptions({"name": "SHIPPER_ID", "value": self.shipper_id}),
-            ShipmentOptions({"name": "ADD_TO_MANIFEST", "value": "true" })
-        ]
-        txid = test_util.get_pb_tx_id()
-        
-        print "Testing purchase shipment label ..."
-        shipment.createAndPurchase(self.auth_obj, txid, True)
         self.assertEqual("shipmentId" in shipment, True)
-        
+        self.assertEqual(
+            test_util.verify_ledger_balance_after_txn(
+                shipment, start_balance, end_balance), True)
+                
         tracking = Tracking(trackingNumber=shipment.parcelTrackingNumber)
         try:
             print "Testing get tracking status ..."

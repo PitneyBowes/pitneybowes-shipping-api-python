@@ -26,37 +26,18 @@ class TestMerchant(unittest.TestCase):
         test_util.setup_env()
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
+        self.developer = test_util.setup_developer(self.auth_obj)
 
     def tearDown(self):
         pass
 
     def testMerchant(self):
-        developer = Developer(developerid=test_util._test_devid)
+
+        print "Testing merchant registration and query ..."
+        merchant, acct_num = test_util.setup_merchant(self.auth_obj, self.developer)
         
-        # individual account mode        
-        print "Testing merchant registration (individual account mode) ..."
-        merchant = developer.registerMerchantIndividualAccount(self.auth_obj, 
-            test_util._test_merchant_email)
-        acct_num = merchant.paymentAccountNumber
-                
-        # bulk account mode
-        # since we are given merchant credential for individual account mode
-        # we expect to fail with Invalid developer type
-        print "Testing merchant registration (bulk account mode) ..."
-        try:
-            merchant2 = developer.registerMerchantBulkAccount(self.auth_obj, 
-                Address(test_util._MY_BULK_MERCHANT_ADDR))
-        except APIError, api_err:
-            if len(api_err.error_info) < 1: 
-                raise api_err
-            if api_err.error_info[0]["message"] != "Invalid developer type!":
-                raise api_err
-            print "   bulk mode merchant registration call fails"
-            print "   but this can be normal if the developer is not configured"
-            print "   for bulk account mode"
-     
         print "Testing account balance query ..."
         Account.getBalanceByAccountNumber(self.auth_obj, acct_num)
-
+        
 if __name__ == "__main__":
     unittest.main()

@@ -27,59 +27,25 @@ class TestManifest(unittest.TestCase):
         test_util.setup_env()        
         self.auth_obj = AuthenticationToken(api_key=test_util._test_api_key, 
                                             api_secret=test_util._test_api_secret)
-        
-        developer = Developer(developerid=test_util._test_devid)
-        merchant = developer.registerMerchantIndividualAccount(self.auth_obj, 
-            test_util._test_merchant_email)
-        shipper_id = merchant.postalReportingNumber
-                
-        rate = Rate(test_util._MY_RATE_REQUEST_CARRIER_USPS)  
-        parcel = Parcel(test_util._MY_PARCEL)    
-                  
-        self.shipment1 = Shipment(fromAddress=test_util._MY_ORIGIN_ADDR, 
-                            toAddress=test_util._MY_DEST_ADDR,
-                            parcel=parcel, rates=[rate])
-        self.shipment2 = Shipment(fromAddress=test_util._MY_ORIGIN_ADDR, 
-                            toAddress=test_util._MY_DEST_ADDR,
-                            parcel=parcel, rates=[rate])
-                
-        rates = self.shipment1.getRates(self.auth_obj, 
-                                        test_util.get_pb_tx_id(), True)      
-        self.shipment1.rates = rates    
-        self.shipment1.documents = [Document(test_util._MY_SHIPMENT_DOCUMENT)]
-        self.shipment1.shipmentOptions = [
-            ShipmentOptions({"name": "SHIPPER_ID", "value": shipper_id}),
-            ShipmentOptions({"name": "ADD_TO_MANIFEST", "value": "true" })
-        ]
-        
-        rates = self.shipment2.getRates(self.auth_obj, 
-                                        test_util.get_pb_tx_id(), True)      
-        self.shipment2.rates = rates    
-        self.shipment2.documents = [Document(test_util._MY_SHIPMENT_DOCUMENT)]
-        self.shipment2.shipmentOptions = [
-            ShipmentOptions({"name": "SHIPPER_ID", "value": shipper_id}),
-            ShipmentOptions({"name": "ADD_TO_MANIFEST", "value": "true" })
-        ]
-        
-        self.shipment1.createAndPurchase(self.auth_obj, 
-                                         test_util.get_pb_tx_id(), True) 
-        self.shipment2.createAndPurchase(self.auth_obj,
-                                         test_util.get_pb_tx_id(), True)
-        
+        self.developer = test_util.setup_developer(self.auth_obj)
+        merchant, acct_num = test_util.setup_merchant(self.auth_obj, self.developer)
+        self.shipper_id = merchant.postalReportingNumber
+
     def tearDown(self):
-        self.shipment1.cancel(self.auth_obj, test_util.get_pb_tx_id(), 
-                              self.shipment1.rates[0].carrier)
-        self.shipment2.cancel(self.auth_obj, test_util.get_pb_tx_id(), 
-                              self.shipment2.rates[0].carrier)        
+        pass
 
     def testManifest(self):
-        trk_nums = [self.shipment1.parcelTrackingNumber, 
-                    self.shipment2.parcelTrackingNumber]
+        shipment1, txid1 = test_util.create_single_shipment(
+            self.auth_obj, self.developer, self.shipper_id)
+        shipment2, txid2 = test_util.create_single_shipment(
+            self.auth_obj, self.developer, self.shipper_id)
+        trk_nums = [shipment1.parcelTrackingNumber, 
+                    shipment2.parcelTrackingNumber]
         manifest = Manifest(
             carrier=test_util._MY_RATE_REQUEST_CARRIER_USPS["carrier"], 
             submissionDate=datetime.datetime.utcnow().strftime("%Y-%m-%d"),
             parcelTrackingNumbers=trk_nums,
-            fromAddress=self.shipment1.fromAddress)
+            fromAddress=shipment1.fromAddress)
         txid = test_util.get_pb_tx_id()
 
         print "Testing manifest creation ..."
