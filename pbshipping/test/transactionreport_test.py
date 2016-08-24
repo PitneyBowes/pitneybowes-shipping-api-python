@@ -65,9 +65,6 @@ class TestTransactionReport(unittest.TestCase):
     def testTransactionReport(self):
         print "Testing get transaction report  ..."  
 
-        shipment, txid = test_util.create_single_shipment(
-            self.auth_obj, self.developer, self.shipperId)
-        
         query = dict()
         
         # limit query to the past 7 days 
