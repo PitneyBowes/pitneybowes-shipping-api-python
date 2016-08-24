@@ -20,6 +20,7 @@
 import urllib
 import urllib2
 import urlparse
+from decimal import Decimal
 
 from pbshipping import util, error, http_client
 from pbshipping import Configuration
@@ -72,7 +73,7 @@ class Requestor(object):
         json_body = None
         if content != None:
             try:
-                json_body = util.json.loads(content)
+                json_body = util.json.loads(content, parse_float=Decimal)
             except Exception, e:
                 print "problem decoding json response"
                 json_body = None

@@ -18,6 +18,7 @@
 
 import base64
 import urllib2
+from decimal import Decimal
 
 from pbshipping import util, error, http_client
 from pbshipping import Configuration
@@ -77,7 +78,7 @@ class AuthenticationToken(object):
         json_body = None
         if content != None:
             try:
-                json_body = util.json.loads(content)
+                json_body = util.json.loads(content, parse_float=Decimal)
             except Exception, e:
                 json_body = None
 

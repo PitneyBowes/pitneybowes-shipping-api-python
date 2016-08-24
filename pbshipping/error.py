@@ -16,6 +16,7 @@
 # Description: shipping api error classes
 #
 
+from decimal import Decimal
 from pbshipping import util
 
 #
@@ -40,7 +41,7 @@ class APIError(Exception):
         self.error_info = []
         json_obj = None
         try:
-            json_obj = util.json.loads(http_body)
+            json_obj = util.json.loads(http_body, parse_float=Decimal)
         except Exception, e:
             json_obj = None
             

@@ -19,6 +19,7 @@
 
 import sys
 import logging
+from decimal import Decimal
 import json # allow us to override in the future if needed
 
 logger = logging.getLogger("pbshipping")
@@ -33,3 +34,8 @@ def encode_dict_utf8(dict_obj):
     for key, value in dict_obj.iteritems():
         key = utf8(key)
         yield (key, utf8(value))
+        
+def json_serialize_default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError    

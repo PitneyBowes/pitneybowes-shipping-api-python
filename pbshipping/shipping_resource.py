@@ -136,6 +136,22 @@ class DeliveryCommitment(ShippingAPIResource):
     
 class Developer(ShippingAPIResource):
 
+    # 
+    # CLIENT LIBRARY SPECIFIC
+    # API: GET /developers/{developerId}
+    # API signature: get/developers/...
+    # 
+    # Query for developer account attributes
+    #
+    def refresh(self, auth_obj):
+        if self.developerid is None:
+            raise error.MissingResourceAttribute("developerid")
+        api_path = "/developers/" + self.developerid 
+        api_version = get_api_version("get/developers/...")
+        json_resp = super(Developer, self).request("get", auth_obj, api_version, 
+            api_path, None, None, None)  
+        self.update(json_resp)       
+                    
     #
     # MANAGING MERCHANTS
     # API: GET /developers/{developerId}/merchants/emails/{emailId}/
@@ -157,6 +173,18 @@ class Developer(ShippingAPIResource):
         json_resp = super(Developer, self).request("get", auth_obj, api_version, 
             api_path, None, None, None) 
         return Merchant(json_resp)
+    
+    #
+    # CLIENT LIBRARY SPECIFIC
+    # API: GET /developers/{developerId}/merchants/emails/{emailId}/
+    # API signature: get/developers/.../merchants/emails/...
+    # 
+    # Query for merchant details using merchant's email address if developer
+    # is operating in bulk mode
+    #
+    def getMerchantBulkAccount(self, auth_obj, emailid):
+        # use the same underlying REST call
+        return self.registerMerchantIndividualAccount(auth_obj, emailid)
  
     #
     # MANAGING MERCHANTS
