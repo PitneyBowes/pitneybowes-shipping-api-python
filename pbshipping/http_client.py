@@ -57,12 +57,14 @@ class Urllib2HttpClient(HttpClient):
                 post_data_str = ""
             else:
                 if "Content-Type" not in headers:
-                    post_data_str = util.json.dumps(post_data)                    
+                    post_data_str = util.json.dumps(
+                        post_data, default=util.json_serialize_default)                    
                 elif headers["Content-Type"].lower() == "application/x-www-form-urlencoded":
                     encoded_utf8 = util.encode_dict_utf8(post_data)
                     post_data_str = urllib.urlencode(list(encoded_utf8))             
                 else:
-                    post_data_str = util.json.dumps(post_data)
+                    post_data_str = util.json.dumps(
+                        post_data, default=util.json_serialize_default)
 
         req = pb_urllib2_request_with_method(method, url, post_data_str, headers)
         resp = urllib2.urlopen(req)
