@@ -72,7 +72,7 @@ class TestShipment(unittest.TestCase):
                                       txid)
     
         print "Testing canceling shipment ..."
-        cancel_result = shipment.cancel(self.auth_obj, test_util.get_pb_tx_id(), 
+        cancel_result = shipment.cancel(self.auth_obj, txid, 
                               shipment.rates[0].carrier)
         self.assertEqual("status" in cancel_result, True)
         

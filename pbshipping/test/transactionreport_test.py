@@ -53,7 +53,8 @@ class TestTransactionReport(unittest.TestCase):
 
         for next_row in report.content:
             txn = TransactionDetails(next_row)
-            self.assertEqual(txn.developerRateAmount, rate_benchmark)
+            if "POSTAGE PRINT " in txn.transactionType:
+                self.assertEqual(txn.developerRateAmount, rate_benchmark)
 
             txn_detail = "      timestamp: " + txn.transactionDateTime
             txn_detail += " txid: " + txn.transactionId
