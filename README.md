@@ -1,3 +1,4 @@
+# DEPRICATED . THIS PROJECT IS NO LONGER MAINTAINED
 # Pitney Bowes Shipping Client Library for Python
 [![PyPI version](https://badge.fury.io/py/pbshipping.svg)](https://badge.fury.io/py/pbshipping)
 
