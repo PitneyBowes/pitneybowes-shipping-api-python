@@ -1,0 +1,16 @@
+from __future__ import absolute_import
+
+# flake8: noqa
+
+# import apis into api package
+from pitneybowes_shippingapi.api.address_validation_api import AddressValidationApi
+from pitneybowes_shippingapi.api.carrier_info_api import CarrierInfoApi
+from pitneybowes_shippingapi.api.container_api import ContainerApi
+from pitneybowes_shippingapi.api.cross_border_quotes_api import CrossBorderQuotesApi
+from pitneybowes_shippingapi.api.manifests_api import ManifestsApi
+from pitneybowes_shippingapi.api.parcel_protection_api import ParcelProtectionApi
+from pitneybowes_shippingapi.api.pickup_api import PickupApi
+from pitneybowes_shippingapi.api.rate_parcels_api import RateParcelsApi
+from pitneybowes_shippingapi.api.shipment_api import ShipmentApi
+from pitneybowes_shippingapi.api.tracking_api import TrackingApi
+from pitneybowes_shippingapi.api.transaction_reports_api import TransactionReportsApi
