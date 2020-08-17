@@ -165,18 +165,18 @@ class AddressValidationApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def verify_and_suggest_address(self, return_suggestions, address, **kwargs):  # noqa: E501
+    def verify_and_suggest_address(self, return_suggestions, address_verify_suggest, **kwargs):  # noqa: E501
         """Address Suggestion  # noqa: E501
 
         This operation returns suggested addresses. Use this if the [Address Validation API](https://shipping.pitneybowes.com/api/post-address-verify.html) call has returned an error.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.verify_and_suggest_address(return_suggestions, address, async_req=True)
+        >>> thread = api.verify_and_suggest_address(return_suggestions, address_verify_suggest, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str return_suggestions: To return suggested addresses, set this to true. (required)
-        :param Address address: Address object that needs to be validated. (required)
+        :param AddressVerifySuggest address_verify_suggest: Address object that needs to be validated. (required)
         :param bool x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
@@ -190,20 +190,20 @@ class AddressValidationApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.verify_and_suggest_address_with_http_info(return_suggestions, address, **kwargs)  # noqa: E501
+        return self.verify_and_suggest_address_with_http_info(return_suggestions, address_verify_suggest, **kwargs)  # noqa: E501
 
-    def verify_and_suggest_address_with_http_info(self, return_suggestions, address, **kwargs):  # noqa: E501
+    def verify_and_suggest_address_with_http_info(self, return_suggestions, address_verify_suggest, **kwargs):  # noqa: E501
         """Address Suggestion  # noqa: E501
 
         This operation returns suggested addresses. Use this if the [Address Validation API](https://shipping.pitneybowes.com/api/post-address-verify.html) call has returned an error.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.verify_and_suggest_address_with_http_info(return_suggestions, address, async_req=True)
+        >>> thread = api.verify_and_suggest_address_with_http_info(return_suggestions, address_verify_suggest, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str return_suggestions: To return suggested addresses, set this to true. (required)
-        :param Address address: Address object that needs to be validated. (required)
+        :param AddressVerifySuggest address_verify_suggest: Address object that needs to be validated. (required)
         :param bool x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :param _return_http_data_only: response data without head status code
                                        and headers
@@ -223,7 +223,7 @@ class AddressValidationApi(object):
 
         all_params = [
             'return_suggestions',
-            'address',
+            'address_verify_suggest',
             'x_pb_unified_error_structure'
         ]
         all_params.extend(
@@ -247,10 +247,10 @@ class AddressValidationApi(object):
         if self.api_client.client_side_validation and ('return_suggestions' not in local_var_params or  # noqa: E501
                                                         local_var_params['return_suggestions'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `return_suggestions` when calling `verify_and_suggest_address`")  # noqa: E501
-        # verify the required parameter 'address' is set
-        if self.api_client.client_side_validation and ('address' not in local_var_params or  # noqa: E501
-                                                        local_var_params['address'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `address` when calling `verify_and_suggest_address`")  # noqa: E501
+        # verify the required parameter 'address_verify_suggest' is set
+        if self.api_client.client_side_validation and ('address_verify_suggest' not in local_var_params or  # noqa: E501
+                                                        local_var_params['address_verify_suggest'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `address_verify_suggest` when calling `verify_and_suggest_address`")  # noqa: E501
 
         collection_formats = {}
 
@@ -268,8 +268,8 @@ class AddressValidationApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'address' in local_var_params:
-            body_params = local_var_params['address']
+        if 'address_verify_suggest' in local_var_params:
+            body_params = local_var_params['address_verify_suggest']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501

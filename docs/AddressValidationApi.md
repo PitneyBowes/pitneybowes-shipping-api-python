@@ -87,7 +87,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **verify_and_suggest_address**
-> AddressSuggestionResponse verify_and_suggest_address(return_suggestions, address, x_pb_unified_error_structure=x_pb_unified_error_structure)
+> AddressSuggestionResponse verify_and_suggest_address(return_suggestions, address_verify_suggest, x_pb_unified_error_structure=x_pb_unified_error_structure)
 
 Address Suggestion
 
@@ -124,12 +124,12 @@ with pbshipping.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = pbshipping.AddressValidationApi(api_client)
     return_suggestions = 'true' # str | To return suggested addresses, set this to true. (default to 'true')
-address = pbshipping.Address() # Address | Address object that needs to be validated.
+address_verify_suggest = pbshipping.AddressVerifySuggest() # AddressVerifySuggest | Address object that needs to be validated.
 x_pb_unified_error_structure = True # bool | Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. (optional) (default to True)
 
     try:
         # Address Suggestion
-        api_response = api_instance.verify_and_suggest_address(return_suggestions, address, x_pb_unified_error_structure=x_pb_unified_error_structure)
+        api_response = api_instance.verify_and_suggest_address(return_suggestions, address_verify_suggest, x_pb_unified_error_structure=x_pb_unified_error_structure)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling AddressValidationApi->verify_and_suggest_address: %s\n" % e)
@@ -140,7 +140,7 @@ x_pb_unified_error_structure = True # bool | Set this to true to use the standar
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **return_suggestions** | **str**| To return suggested addresses, set this to true. | [default to &#39;true&#39;]
- **address** | [**Address**](Address.md)| Address object that needs to be validated. | 
+ **address_verify_suggest** | [**AddressVerifySuggest**](AddressVerifySuggest.md)| Address object that needs to be validated. | 
  **x_pb_unified_error_structure** | **bool**| Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. | [optional] [default to True]
 
 ### Return type

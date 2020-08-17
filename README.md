@@ -130,6 +130,7 @@ Class | Method | HTTP request | Description
  - [Address](docs/Address.md)
  - [AddressSuggestionResponse](docs/AddressSuggestionResponse.md)
  - [AddressSuggestionResponseSuggestions](docs/AddressSuggestionResponseSuggestions.md)
+ - [AddressVerifySuggest](docs/AddressVerifySuggest.md)
  - [BatteryDetails](docs/BatteryDetails.md)
  - [CancelShipment](docs/CancelShipment.md)
  - [Carrier](docs/Carrier.md)

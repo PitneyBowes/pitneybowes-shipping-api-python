@@ -22,6 +22,7 @@ from pbshipping.models.additional_address import AdditionalAddress
 from pbshipping.models.address import Address
 from pbshipping.models.address_suggestion_response import AddressSuggestionResponse
 from pbshipping.models.address_suggestion_response_suggestions import AddressSuggestionResponseSuggestions
+from pbshipping.models.address_verify_suggest import AddressVerifySuggest
 from pbshipping.models.battery_details import BatteryDetails
 from pbshipping.models.cancel_shipment import CancelShipment
 from pbshipping.models.carrier import Carrier
