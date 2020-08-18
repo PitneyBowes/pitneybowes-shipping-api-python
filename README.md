@@ -17,7 +17,7 @@ Python 2.7 and 3.4+
 If the python package is hosted on a repository, you can install directly using:
 
 ```sh
-pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
+pip install git+https://github.com/PitneyBowes/pitneybowes-shipping-api-python.git
 ```
 (you may need to run `pip` with root permission: `sudo pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git`)
 
@@ -64,9 +64,7 @@ configuration = pbshipping.Configuration(
 # satisfies your auth use case.
 
 # Configure OAuth2 access token for authorization: oAuth2ClientCredentials
-configuration = pbshipping.Configuration(
-    host = "https://api-sandbox.pitneybowes.com/shippingservices"
-)
+
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 
@@ -74,16 +72,16 @@ configuration.access_token = 'YOUR_ACCESS_TOKEN'
 with pbshipping.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = pbshipping.AddressValidationApi(api_client)
-    address = pbshipping.Address() # Address | Address object that needs to be validated.
+    address = pbshipping.Address(address_lines=['1 Atwell rd','bldg 2','apt 302'],city_town ='Cooperstown',state_province = 'NJ',postal_code = '13326',country_code = 'US',name = 'James Brother',company = 'Mary Imogene Basset Hospital',phone = '555-924-2428',email = 'james.b@email.com'	) # Address | Address object that needs to be validated.
 x_pb_unified_error_structure = True # bool | Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. (optional) (default to True)
 minimal_address_validation = True # bool | When set to true, the complete address (delivery line and last line) is validated but only the last line (city, state, and postal code) would be changed by the validation check. (optional)
 
-    try:
-        # Address validation
-        api_response = api_instance.verify_address(address, x_pb_unified_error_structure=x_pb_unified_error_structure, minimal_address_validation=minimal_address_validation)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling AddressValidationApi->verify_address: %s\n" % e)
+try:
+	# Address validation
+    api_response = api_instance.verify_address(address, x_pb_unified_error_structure=x_pb_unified_error_structure, minimal_address_validation=minimal_address_validation)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling AddressValidationApi->verify_address: %s\n" % e)
     
 ```
 
