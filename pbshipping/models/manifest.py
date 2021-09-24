@@ -111,7 +111,7 @@ class Manifest(object):
         """
         if self.local_vars_configuration.client_side_validation and carrier is None:  # noqa: E501
             raise ValueError("Invalid value for `carrier`, must not be `None`")  # noqa: E501
-        allowed_values = ["USPS", "NEWGISTICS", "PBPresort"]  # noqa: E501
+        allowed_values = ["USPS", "NEWGISTICS", "PBPresort", "pbcs"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and carrier not in allowed_values:  # noqa: E501
             raise ValueError(
                 "Invalid value for `carrier` ({0}), must be one of {1}"  # noqa: E501

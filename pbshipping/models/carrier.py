@@ -35,8 +35,9 @@ class Carrier(object):
     PBI = "PBI"
     FEDEX = "FEDEX"
     USP = "USP"
+    PBCS = "PBCS"
 
-    allowable_values = [USPS, PBPRESORT, NEWGISTICS, PBI, FEDEX, USP]  # noqa: E501
+    allowable_values = [USPS, PBPRESORT, NEWGISTICS, PBI, FEDEX, USP, PBCS]  # noqa: E501
 
     """
     Attributes:
