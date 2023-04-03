@@ -423,12 +423,12 @@ class ShipmentApi(object):
             path_params['shipmentId'] = local_var_params['shipment_id']  # noqa: E501
 
         query_params = []
-
+        if 'carrier' in local_var_params and local_var_params['carrier'] is not None:  # noqa: E501
+            query_params.append(('carrier', local_var_params['carrier']))  # noqa: E501
+        
         header_params = {}
         if 'x_pb_unified_error_structure' in local_var_params:
             header_params['X-PB-UnifiedErrorStructure'] = local_var_params['x_pb_unified_error_structure']  # noqa: E501
-        if 'carrier' in local_var_params:
-            header_params['carrier'] = local_var_params['carrier']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -545,12 +545,12 @@ class ShipmentApi(object):
         query_params = []
         if 'original_transaction_id' in local_var_params and local_var_params['original_transaction_id'] is not None:  # noqa: E501
             query_params.append(('originalTransactionId', local_var_params['original_transaction_id']))  # noqa: E501
+        if 'carrier' in local_var_params and local_var_params['carrier'] is not None:  # noqa: E501
+            query_params.append(('carrier', local_var_params['carrier']))  # noqa: E501   
 
         header_params = {}
         if 'x_pb_unified_error_structure' in local_var_params:
             header_params['X-PB-UnifiedErrorStructure'] = local_var_params['x_pb_unified_error_structure']  # noqa: E501
-        if 'carrier' in local_var_params:
-            header_params['carrier'] = local_var_params['carrier']  # noqa: E501
 
         form_params = []
         local_var_files = {}
